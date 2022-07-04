@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { getAlbumsInfo } from "../api/albums";
 import ModalView from "../components/layouts/ModalView";
 import LikeButton from "../components/LikeButton";
+import { List, ListItem } from "../components/styles/List.styles";
+import { Paragraph, Title } from "../components/styles/Title.style";
 import { findAlbumByName } from "../helper";
 import { RootState } from "../store";
 import { setTracks } from "../store/appSlice";
@@ -61,24 +63,24 @@ const Album: FC = () => {
           <AlbumHeader>
             <MainImage src={albumInfo.image[2]["#text"]} alt={albumInfo.name} />
             <AlbumContent>
-              <Title>{name}</Title>
-
+              <Title size={37}>{name}</Title>
               {albumInfo.summary && (
-                <Summary
+                <Paragraph
+                  size={17}
                   dangerouslySetInnerHTML={{ __html: albumInfo.summary }}
                 />
               )}
             </AlbumContent>
           </AlbumHeader>
           <div>
-            <TrackList>
+            <List>
               {albumInfo.tracks &&
                 albumInfo.tracks.map((track, key) => (
-                  <TrackItem key={key}>
-                    <ListItemLabel>{track.name}</ListItemLabel>
-                  </TrackItem>
+                  <Item key={key}>
+                    <Title>{track.name}</Title>
+                  </Item>
                 ))}
-            </TrackList>
+            </List>
           </div>
         </>
       )}
@@ -105,30 +107,11 @@ const AlbumContent = styled.div`
   flex: 1;
 `;
 
-const Title = styled.h1`
-  color: #ffff;
-`;
-
-const Summary = styled.div`
-  color: #ffff;
-  font-size: 17px;
-`;
-
-const TrackList = styled.ul`
-  padding-left: 0px;
-`;
-
-const TrackItem = styled.li`
-  list-style: none;
+const Item = styled(ListItem)`
   background: #2d2d2d;
   height: 50px;
   padding: 10px;
-  display: flex;
   margin-bottom: 10px;
-`;
-
-const ListItemLabel = styled.p`
-  color: #ffff;
 `;
 
 export default Album;
